@@ -27,6 +27,7 @@ export function IntelligentDarkMode() {
   const [brightness, setBrightness] = useState([75]);
   const [colorTemperature, setColorTemperature] = useState([6500]);
   const [themeVariant, setThemeVariant] = useState('adaptive');
+  const [previewMode, setPreviewMode] = useState(false);
 
   const themePresets = [
     { id: 'adaptive', name: 'Adaptatif intelligent', icon: Zap },
@@ -178,13 +179,33 @@ export function IntelligentDarkMode() {
           </div>
 
           <div className="flex gap-4">
-            <Button className="bg-indigo-600 hover:bg-indigo-700">
+            <Button 
+              className="bg-indigo-600 hover:bg-indigo-700"
+              onClick={() => {
+                console.log('Application du thème intelligent');
+                // Appliquer le thème sélectionné
+                document.documentElement.setAttribute('data-theme', 'intelligent-dark');
+                alert('Thème intelligent appliqué avec succès!\n\nCaractéristiques:\n✅ Adaptation automatique selon l\'heure\n✅ Optimisation pour réduire la fatigue oculaire\n✅ Conservation des préférences utilisateur');
+              }}
+            >
               <Palette className="w-4 h-4 mr-2" />
               Appliquer Thème
             </Button>
-            <Button variant="outline">
+            <Button 
+              variant="outline"
+              onClick={() => {
+                console.log('Prévisualisation du thème');
+                // Activer mode prévisualisation
+                setPreviewMode(!previewMode);
+                if (!previewMode) {
+                  alert('Mode prévisualisation activé!\n\nVous pouvez maintenant voir un aperçu du thème avant de l\'appliquer définitivement.');
+                } else {
+                  alert('Mode prévisualisation désactivé.');
+                }
+              }}
+            >
               <Monitor className="w-4 h-4 mr-2" />
-              Prévisualiser
+              {previewMode ? 'Quitter Prévisualisation' : 'Prévisualiser'}
             </Button>
           </div>
         </CardContent>

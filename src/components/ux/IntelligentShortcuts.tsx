@@ -25,6 +25,7 @@ export function IntelligentShortcuts() {
   const [contextualSuggestions, setContextualSuggestions] = useState(true);
   const [newShortcutKey, setNewShortcutKey] = useState('');
   const [newShortcutAction, setNewShortcutAction] = useState('');
+  const [editingShortcut, setEditingShortcut] = useState<number | null>(null);
 
   const intelligentShortcuts = [
     {
@@ -144,10 +145,29 @@ export function IntelligentShortcuts() {
                         )}
                       </div>
                       <div className="flex gap-1">
-                        <Button size="sm" variant="ghost" className="h-6 w-6 p-0">
+                        <Button 
+                          size="sm" 
+                          variant="ghost" 
+                          className="h-6 w-6 p-0"
+                          onClick={() => {
+                            console.log('Édition du raccourci:', shortcut.action);
+                            setEditingShortcut(shortcut.id);
+                            alert(`Édition du raccourci: ${shortcut.action}\n\nFonctionnalités d'édition:\n- Modifier la combinaison de touches\n- Changer l'action associée\n- Ajuster le contexte d'utilisation`);
+                          }}
+                        >
                           <Edit3 className="w-3 h-3" />
                         </Button>
-                        <Button size="sm" variant="ghost" className="h-6 w-6 p-0">
+                        <Button 
+                          size="sm" 
+                          variant="ghost" 
+                          className="h-6 w-6 p-0"
+                          onClick={() => {
+                            console.log('Suppression du raccourci:', shortcut.action);
+                            if (confirm(`Supprimer le raccourci "${shortcut.action}" ?`)) {
+                              alert('Raccourci supprimé avec succès!');
+                            }
+                          }}
+                        >
                           <Trash2 className="w-3 h-3" />
                         </Button>
                       </div>

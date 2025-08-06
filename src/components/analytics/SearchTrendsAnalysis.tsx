@@ -29,6 +29,8 @@ import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Toolti
 
 export function SearchTrendsAnalysis() {
   const [selectedPeriod, setSelectedPeriod] = useState('30days');
+  const [showFilters, setShowFilters] = useState(false);
+  const [showPeriodSelector, setShowPeriodSelector] = useState(false);
 
   const topSearchTerms = [
     {
@@ -163,11 +165,25 @@ export function SearchTrendsAnalysis() {
           <p className="text-gray-600">Découvrez les tendances et comportements de recherche des utilisateurs</p>
         </div>
         <div className="flex gap-2">
-          <Button variant="outline" size="sm">
+          <Button 
+            variant="outline" 
+            size="sm"
+            onClick={() => {
+              setShowFilters(!showFilters);
+              console.log('Filtres de tendances toggled:', !showFilters);
+            }}
+          >
             <Filter className="w-4 h-4 mr-2" />
             Filtres
           </Button>
-          <Button variant="outline" size="sm">
+          <Button 
+            variant="outline" 
+            size="sm"
+            onClick={() => {
+              setShowPeriodSelector(!showPeriodSelector);
+              console.log('Sélecteur de période des tendances toggled:', !showPeriodSelector);
+            }}
+          >
             <Calendar className="w-4 h-4 mr-2" />
             Période
           </Button>

@@ -35,6 +35,8 @@ interface AnalyticsDashboardsSectionProps {
 export function AnalyticsDashboardsSection({ language }: AnalyticsDashboardsSectionProps) {
   const [selectedPeriod, setSelectedPeriod] = useState('month');
   const [activeTab, setActiveTab] = useState('overview');
+  const [showFilters, setShowFilters] = useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
   const kpiCards = [
     {
@@ -139,15 +141,54 @@ export function AnalyticsDashboardsSection({ language }: AnalyticsDashboardsSect
                   </option>
                 ))}
               </select>
-              <Button variant="outline" size="sm">
+              <Button 
+                variant="outline" 
+                size="sm"
+                onClick={() => {
+                  setShowFilters(!showFilters);
+                  console.log('Filtres toggled:', !showFilters);
+                }}
+              >
                 <Filter className="w-4 h-4 mr-2" />
                 Filtres
               </Button>
-              <Button variant="outline" size="sm">
-                <RefreshCw className="w-4 h-4 mr-2" />
-                Actualiser
+              <Button 
+                variant="outline" 
+                size="sm"
+                onClick={async () => {
+                  setIsRefreshing(true);
+                  console.log('Actualisation des données...');
+                  // Simuler un appel API
+                  await new Promise(resolve => setTimeout(resolve, 1000));
+                  setIsRefreshing(false);
+                  console.log('Données actualisées');
+                }}
+                disabled={isRefreshing}
+              >
+                <RefreshCw className={`w-4 h-4 mr-2 ${isRefreshing ? 'animate-spin' : ''}`} />
+                {isRefreshing ? 'Actualisation...' : 'Actualiser'}
               </Button>
-              <Button variant="outline" size="sm">
+              <Button 
+                variant="outline" 
+                size="sm"
+                onClick={() => {
+                  const data = {
+                    period: selectedPeriod,
+                    timestamp: new Date().toISOString(),
+                    analytics: 'dashboard-data'
+                  };
+                  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+                  const url = URL.createObjectURL(blob);
+                  const a = document.createElement('a');
+                  a.href = url;
+                  a.download = `analytics-dashboard-${new Date().toISOString().split('T')[0]}.json`;
+                  document.body.appendChild(a);
+                  a.click();
+                  document.body.removeChild(a);
+                  URL.revokeObjectURL(url);
+                  console.log('Export terminé');
+                }}
+              >
                 <Download className="w-4 h-4 mr-2" />
                 Exporter
               </Button>

@@ -29,6 +29,8 @@ import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Toolti
 
 export function DocumentUsageMetrics() {
   const [selectedPeriod, setSelectedPeriod] = useState('7days');
+  const [showFilters, setShowFilters] = useState(false);
+  const [showDatePicker, setShowDatePicker] = useState(false);
 
   const topDocuments = [
     {
@@ -224,11 +226,25 @@ export function DocumentUsageMetrics() {
           <p className="text-gray-600">Analysez l'utilisation et l'engagement avec vos documents</p>
         </div>
         <div className="flex gap-2">
-          <Button variant="outline" size="sm">
+          <Button 
+            variant="outline" 
+            size="sm"
+            onClick={() => {
+              setShowFilters(!showFilters);
+              console.log('Filtres documentaires toggled:', !showFilters);
+            }}
+          >
             <Filter className="w-4 h-4 mr-2" />
             Filtres
           </Button>
-          <Button variant="outline" size="sm">
+          <Button 
+            variant="outline" 
+            size="sm"
+            onClick={() => {
+              setShowDatePicker(!showDatePicker);
+              console.log('Sélecteur de période toggled:', !showDatePicker);
+            }}
+          >
             <Calendar className="w-4 h-4 mr-2" />
             Période
           </Button>

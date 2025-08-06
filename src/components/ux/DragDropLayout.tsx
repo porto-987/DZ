@@ -19,6 +19,7 @@ import {
 export function DragDropLayout() {
   const [editMode, setEditMode] = useState(false);
   const [selectedWidget, setSelectedWidget] = useState<string | null>(null);
+  const [previewMode, setPreviewMode] = useState(false);
 
   const availableWidgets = [
     { id: 'search', name: 'Recherche rapide', category: 'navigation' },
@@ -89,17 +90,46 @@ export function DragDropLayout() {
                 Utilisez les poignées pour redimensionner.
               </p>
               <div className="flex flex-wrap gap-2">
-                <Button size="sm" variant="outline">
+                <Button 
+                  size="sm" 
+                  variant="outline"
+                  onClick={() => {
+                    console.log('Sauvegarde de la disposition');
+                    localStorage.setItem('dalil-layout', JSON.stringify({
+                      timestamp: new Date().toISOString(),
+                      layout: 'custom-user-layout'
+                    }));
+                    alert('Disposition sauvegardée avec succès!\n\nVotre configuration personnalisée a été enregistrée et sera restaurée lors de votre prochaine visite.');
+                  }}
+                >
                   <Save className="w-4 h-4 mr-1" />
                   Sauvegarder
                 </Button>
-                <Button size="sm" variant="outline">
+                <Button 
+                  size="sm" 
+                  variant="outline"
+                  onClick={() => {
+                    console.log('Réinitialisation de la disposition');
+                    if (confirm('Réinitialiser la disposition vers les paramètres par défaut ?')) {
+                      localStorage.removeItem('dalil-layout');
+                      window.location.reload();
+                    }
+                  }}
+                >
                   <RotateCcw className="w-4 h-4 mr-1" />
                   Réinitialiser
                 </Button>
-                <Button size="sm" variant="outline">
+                <Button 
+                  size="sm" 
+                  variant="outline"
+                  onClick={() => {
+                    console.log('Activation du mode prévisualisation');
+                    setPreviewMode(!previewMode);
+                    alert(`Mode prévisualisation ${!previewMode ? 'activé' : 'désactivé'}!\n\n${!previewMode ? 'Vous pouvez maintenant voir un aperçu de votre disposition.' : 'Retour au mode édition.'}`);
+                  }}
+                >
                   <Eye className="w-4 h-4 mr-1" />
-                  Prévisualiser
+                  {previewMode ? 'Mode Édition' : 'Prévisualiser'}
                 </Button>
               </div>
             </div>

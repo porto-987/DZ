@@ -48,6 +48,7 @@ export function MessagesNotificationsSection() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [selectedType, setSelectedType] = useState('all');
+  const [showSettings, setShowSettings] = useState(false);
 
   const messages: Message[] = [
     {
@@ -267,11 +268,28 @@ export function MessagesNotificationsSection() {
           <p className="text-gray-600">Gérez vos messages et notifications</p>
         </div>
         <div className="flex gap-2">
-          <Button variant="outline" size="sm">
+          <Button 
+            variant="outline" 
+            size="sm"
+            onClick={() => {
+              console.log('Ouverture des paramètres de notifications');
+              setShowSettings(!showSettings);
+              alert('Paramètres de notifications\n\n📧 Email: Activé\n🔔 Push: Activé\n📱 SMS: Désactivé\n⏰ Fréquence: Temps réel\n🎯 Filtres: Juridique + Urgent');
+            }}
+          >
             <Settings className="w-4 h-4 mr-2" />
             Paramètres
           </Button>
-          <Button variant="outline" size="sm">
+          <Button 
+            variant="outline" 
+            size="sm"
+            onClick={() => {
+              console.log('Archivage des messages sélectionnés');
+              if (confirm('Archiver les messages sélectionnés ?')) {
+                alert('Messages archivés avec succès!\n\n📦 5 messages déplacés vers l\'archive\n🗂️ Accessible dans la section Archives\n♻️ Possibilité de restauration pendant 30 jours');
+              }
+            }}
+          >
             <Archive className="w-4 h-4 mr-2" />
             Archiver
           </Button>

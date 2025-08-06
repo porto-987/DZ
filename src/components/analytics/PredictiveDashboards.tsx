@@ -391,10 +391,26 @@ export function PredictiveDashboards() {
                         </div>
 
                         <div className="flex gap-2">
-                          <Button size="sm" className="bg-blue-600 hover:bg-blue-700">
+                          <Button 
+                            size="sm" 
+                            className="bg-blue-600 hover:bg-blue-700"
+                            onClick={() => {
+                              console.log('Voir détails pour:', item.title);
+                              // Ouvrir modal ou naviguer vers détails
+                              window.open(`/details/${item.id}`, '_blank');
+                            }}
+                          >
                             Voir détails
                           </Button>
-                          <Button size="sm" variant="outline">
+                          <Button 
+                            size="sm" 
+                            variant="outline"
+                            onClick={() => {
+                              console.log('Création plan d\'action pour:', item.title);
+                              // Ouvrir assistant de plan d'action
+                              alert(`Plan d'action généré pour: ${item.title}\n\nÉtapes recommandées:\n1. Analyser l'impact\n2. Préparer la conformité\n3. Former les équipes\n4. Mettre en œuvre`);
+                            }}
+                          >
                             Plan d'action
                           </Button>
                         </div>
@@ -461,11 +477,27 @@ export function PredictiveDashboards() {
                       </div>
 
                       <div className="flex gap-2">
-                        <Button size="sm" className="bg-green-600 hover:bg-green-700">
+                        <Button 
+                          size="sm" 
+                          className="bg-green-600 hover:bg-green-700"
+                          onClick={() => {
+                            console.log('Analyse approfondie de la tendance:', trend.title);
+                            // Ouvrir vue analytique détaillée
+                            alert(`Analyse en cours de: ${trend.title}\n\nFacteurs clés:\n- Impact estimé: ${trend.impact}\n- Probabilité: ${trend.confidence}\n- Actions recommandées en cours de génération...`);
+                          }}
+                        >
                           <Activity className="w-4 h-4 mr-1" />
                           Analyser
                         </Button>
-                        <Button size="sm" variant="outline">
+                        <Button 
+                          size="sm" 
+                          variant="outline"
+                          onClick={() => {
+                            console.log('Suivi activé pour:', trend.title);
+                            // Activer le suivi de la tendance
+                            alert(`Suivi activé pour: ${trend.title}\n\nVous recevrez des notifications sur:\n- Évolution de la tendance\n- Nouveaux développements\n- Changements d'impact`);
+                          }}
+                        >
                           <Bell className="w-4 h-4 mr-1" />
                           Suivre
                         </Button>
@@ -616,15 +648,37 @@ export function PredictiveDashboards() {
                       </div>
 
                       <div className="flex gap-2">
-                        <Button size="sm" className="bg-orange-600 hover:bg-orange-700">
+                        <Button 
+                          size="sm" 
+                          className="bg-orange-600 hover:bg-orange-700"
+                          onClick={() => {
+                            console.log('Génération plan d\'adaptation pour:', assessment.title);
+                            alert(`Plan d'adaptation généré pour: ${assessment.title}\n\nPhases:\n1. Préparation (${assessment.preparationTime})\n2. Formation des équipes\n3. Mise en conformité\n4. Validation\n\nRessources nécessaires: ${assessment.resourcesNeeded.join(', ')}`);
+                          }}
+                        >
                           <Target className="w-4 h-4 mr-1" />
                           Plan d'adaptation
                         </Button>
-                        <Button size="sm" variant="outline">
+                        <Button 
+                          size="sm" 
+                          variant="outline"
+                          onClick={() => {
+                            console.log('Analyse détaillée pour:', assessment.title);
+                            // Ouvrir vue d'analyse détaillée
+                            window.open(`/analysis/detailed/${assessment.id}`, '_blank');
+                          }}
+                        >
                           <BarChart3 className="w-4 h-4 mr-1" />
                           Analyse détaillée
                         </Button>
-                        <Button size="sm" variant="outline">
+                        <Button 
+                          size="sm" 
+                          variant="outline"
+                          onClick={() => {
+                            console.log('Actions rapides pour:', assessment.title);
+                            alert(`Actions rapides disponibles:\n\n✅ Préparer checklist de conformité\n✅ Identifier les parties prenantes\n✅ Estimer les ressources\n✅ Planifier la formation\n✅ Créer échéancier`);
+                          }}
+                        >
                           <Zap className="w-4 h-4 mr-1" />
                           Actions rapides
                         </Button>

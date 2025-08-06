@@ -31,6 +31,7 @@ export function UniversalAccessibility() {
   const [voicePitch, setVoicePitch] = useState([1.0]);
   const [keyboardOnlyMode, setKeyboardOnlyMode] = useState(false);
   const [motorAssistance, setMotorAssistance] = useState(false);
+  const [voiceTestActive, setVoiceTestActive] = useState(false);
 
   const screenReaderFeatures = [
     { name: 'Navigation par landmarks', enabled: true, description: 'Navigation ARIA optimisée' },
@@ -147,11 +148,32 @@ export function UniversalAccessibility() {
                     <span className="font-medium">Test vocal</span>
                   </div>
                   <div className="flex gap-2 mb-3">
-                    <Button size="sm" variant="outline">
+                    <Button 
+                      size="sm" 
+                      variant="outline"
+                      onClick={() => {
+                        setVoiceTestActive(true);
+                        console.log('Test vocal démarré');
+                        // Simuler reconnaissance vocale
+                        setTimeout(() => {
+                          alert('Test vocal en cours... Dites "Bonjour Dalil" pour tester la reconnaissance vocale.');
+                        }, 500);
+                      }}
+                      disabled={voiceTestActive}
+                    >
                       <Play className="w-4 h-4 mr-1" />
-                      Démarrer
+                      {voiceTestActive ? 'En cours...' : 'Démarrer'}
                     </Button>
-                    <Button size="sm" variant="outline">
+                    <Button 
+                      size="sm" 
+                      variant="outline"
+                      onClick={() => {
+                        setVoiceTestActive(false);
+                        console.log('Test vocal arrêté');
+                        alert('Test vocal arrêté. Fonctionnalité vocale désactivée.');
+                      }}
+                      disabled={!voiceTestActive}
+                    >
                       <Square className="w-4 h-4 mr-1" />
                       Arrêter
                     </Button>
