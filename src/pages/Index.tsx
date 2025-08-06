@@ -17,7 +17,7 @@ const VALID_SECTIONS = new Set([
   "dashboards", "analytics-dashboards", "analysis", "reports", "assisted-writing",
   "forum", "collaborative-workspace", "shared-resources",
   "news", "library", "dictionaries", "directories",
-  "nomenclature", "complementary-resources", "data-management", "alerts-notifications", "user-management",
+  "nomenclature", "algerian-enhancements", "complementary-resources", "data-management", "alerts-notifications", "user-management",
   "security", "performance-scalability", "integrations-interoperability", "accessibility-settings", "offline-mode", "mobile-app",
   "about", "contact", "technical-support", "privacy-policy", "terms-of-use", "messages", "ai-search", "ai-advanced", "favorites",
   "data-extraction", "document-templates", "advanced-search", "saved-searches",
