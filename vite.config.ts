@@ -22,7 +22,8 @@ export default defineConfig(({ mode }) => ({
   plugins: [
     react(),
     mode === 'development' && componentTagger(),
-    mode === 'production' && VitePWA({
+    // Only enable PWA in production to avoid development navigation issues
+    ...(mode === 'production' ? [VitePWA({
       registerType: 'autoUpdate',
       manifest: {
         name: 'Dalil.dz - Plateforme Juridique Algérienne',
@@ -75,7 +76,7 @@ export default defineConfig(({ mode }) => ({
           }
         ]
       }
-    }),
+    })] : [])
   ].filter(Boolean),
   resolve: {
     alias: {
