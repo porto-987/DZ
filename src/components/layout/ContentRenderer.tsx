@@ -22,6 +22,7 @@ import { OfflineMode } from "@/components/configuration/OfflineMode";
 import { SecuritySection } from "@/components/configuration/SecuritySection";
 import { MobileAppSection } from "@/components/configuration/MobileAppSection";
 import { IntegrationsInteroperabilitySection } from "@/components/configuration/IntegrationsInteroperabilitySection";
+import { AlgerianEnhancementsSection } from "@/components/algerian/AlgerianEnhancementsSection";
 import DZOCRIAProcessor from "@/components/ocr/DZOCRIAProcessor";
 import ApprovalWorkflowComponent from "@/components/ocr/ApprovalWorkflowComponent";
 import BatchProcessingComponent from "@/components/ocr/BatchProcessingComponent";
@@ -109,12 +110,13 @@ export function ContentRenderer({ activeSection, language, refreshTrigger }: Con
     
     // Configuration sections
     case "nomenclature":
-    case "algerian-enhancements":
     case "complementary-resources":
     case "alerts-notifications":
     case "user-management":
     case "performance-scalability":
       return <ConfigurationSections section={activeSection} language={language} />;
+    case "algerian-enhancements":
+      return <AlgerianEnhancementsSection language={language} />;
     case "integrations-interoperability":
       return <IntegrationsInteroperabilitySection language={language} />;
     
