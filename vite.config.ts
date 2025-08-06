@@ -14,10 +14,16 @@ export default defineConfig(({ mode }) => ({
       clientPort: 8080
     }
   },
+  // Fix for Vite env.mjs Function() CSP issue
+  worker: {
+    format: 'es'
+  },
   define: {
     'process.env.NODE_ENV': JSON.stringify(mode),
     global: 'globalThis',
-    __WS_TOKEN__: JSON.stringify('')
+    __WS_TOKEN__: JSON.stringify(''),
+    // Fix for Vite env.mjs known issue
+    __DEFINES__: '{}'
   },
   plugins: [
     react(),
@@ -106,5 +112,11 @@ export default defineConfig(({ mode }) => ({
     target: 'es2020',
     minify: mode === 'production' ? 'esbuild' : false,
     sourcemap: mode === 'development',
+    // Fix for env.mjs known issue with Function()
+    rollupOptions: {
+      output: {
+        manualChunks: undefined
+      }
+    }
   }
 }));
