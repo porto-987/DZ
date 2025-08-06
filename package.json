@@ -18,7 +18,9 @@
     "build": "vite build",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "postinstall": "node fix-vite-env.js",
+    "fix-vite": "node fix-vite-env.js"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.1.1",
