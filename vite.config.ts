@@ -22,8 +22,8 @@ export default defineConfig(({ mode }) => ({
     'process.env.NODE_ENV': JSON.stringify(mode),
     global: 'globalThis',
     __WS_TOKEN__: JSON.stringify(''),
-    // Fix for Vite env.mjs known issue
-    __DEFINES__: '{}'
+    // Fix for Vite env.mjs known issue - use proper object
+    __DEFINES__: JSON.stringify({})
   },
   plugins: [
     react(),
@@ -96,11 +96,14 @@ export default defineConfig(({ mode }) => ({
       'react-router-dom',
       'lucide-react',
     ],
-    // Force re-optimisation uniquement si nécessaire
-    force: false,
+    // Force re-optimisation pour éviter les identifiants corrompus
+    force: true,
     // Optimiser le cache
     esbuildOptions: {
-      target: 'es2020'
+      target: 'es2020',
+      // Fix for unexpected identifier errors
+      keepNames: true,
+      minifyIdentifiers: false
     }
   },
   // Configuration cache pour réduire la taille
@@ -110,12 +113,17 @@ export default defineConfig(({ mode }) => ({
   },
   build: {
     target: 'es2020',
-    minify: mode === 'production' ? 'esbuild' : false,
+    minify: mode === 'production' ? 'terser' : false,
     sourcemap: mode === 'development',
     // Fix for env.mjs known issue with Function()
     rollupOptions: {
       output: {
-        manualChunks: undefined
+        manualChunks: undefined,
+        // Fix for unexpected identifier errors
+        format: 'es',
+        entryFileNames: '[name]-[hash].js',
+        chunkFileNames: '[name]-[hash].js',
+        assetFileNames: '[name]-[hash].[ext]'
       }
     }
   }
