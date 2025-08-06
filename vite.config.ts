@@ -14,16 +14,9 @@ export default defineConfig(({ mode }) => ({
       clientPort: 8080
     }
   },
-  // Fix for Vite env.mjs Function() CSP issue
-  worker: {
-    format: 'es'
-  },
   define: {
     'process.env.NODE_ENV': JSON.stringify(mode),
-    global: 'globalThis',
-    __WS_TOKEN__: JSON.stringify(''),
-    // Fix for Vite env.mjs known issue - use proper object
-    __DEFINES__: JSON.stringify({})
+    global: 'globalThis'
   },
   plugins: [
     react(),
@@ -95,35 +88,21 @@ export default defineConfig(({ mode }) => ({
       'react-dom',
       'react-router-dom',
       'lucide-react',
-    ],
-    // Force re-optimisation pour éviter les identifiants corrompus
-    force: true,
-    // Optimiser le cache
-    esbuildOptions: {
-      target: 'es2020',
-      // Fix for unexpected identifier errors
-      keepNames: true,
-      minifyIdentifiers: false
-    }
+    ]
   },
   // Configuration cache pour réduire la taille
   cacheDir: 'node_modules/.vite',
   esbuild: {
-    target: 'es2020',
+    target: 'es2015',
+    format: 'esm'
   },
   build: {
-    target: 'es2020',
-    minify: mode === 'production' ? 'terser' : false,
-    sourcemap: mode === 'development',
-    // Fix for env.mjs known issue with Function()
+    target: 'es2015',
+    minify: false,
+    sourcemap: true,
     rollupOptions: {
       output: {
-        manualChunks: undefined,
-        // Fix for unexpected identifier errors
-        format: 'es',
-        entryFileNames: '[name]-[hash].js',
-        chunkFileNames: '[name]-[hash].js',
-        assetFileNames: '[name]-[hash].[ext]'
+        format: 'es'
       }
     }
   }
